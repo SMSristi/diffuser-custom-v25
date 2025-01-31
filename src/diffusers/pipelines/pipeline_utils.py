@@ -29,6 +29,7 @@ import numpy as np
 import PIL
 import torch
 from huggingface_hub import ModelCard, create_repo, hf_hub_download, model_info, snapshot_download
+from huggingface_hub.utils import validate_hf_hub_args
 from packaging import version
 from requests.exceptions import HTTPError
 from tqdm.auto import tqdm
@@ -760,6 +761,7 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
         return torch.device("cpu")
 
     @classmethod
+    @validate_hf_hub_args
     def from_pretrained(cls, pretrained_model_name_or_path: Optional[Union[str, os.PathLike]], **kwargs):
         r"""
         Instantiate a PyTorch diffusion pipeline from pretrained pipeline weights.
@@ -1322,6 +1324,7 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
                 cpu_offload(model, device, offload_buffers=offload_buffers)
 
     @classmethod
+    @validate_hf_hub_args
     def download(cls, pretrained_model_name, **kwargs) -> Union[str, os.PathLike]:
         r"""
         Download and cache a PyTorch diffusion pipeline from pretrained pipeline weights.
